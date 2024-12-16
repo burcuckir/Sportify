@@ -45,30 +45,21 @@ public class JwtAuthFilter implements GlobalFilter {
 
         String token = authHeader.substring(7);
         try {
-            // Token doğrulama (ör. JJWT kütüphanesi veya nimbus-jose-jwt ile)
-
-
             var claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
-
-            // Daha detaylı kontrol (exp, roles, vs.)
             Date expiration = claims.getBody().getExpiration();
             if (expiration.before(new Date())) {
                 throw new JwtException("Token expired");
             }
 
             UUID userId = UUID.fromString(claims.getBody().getId());
-
-            // Yeni bir ServerHttpRequest oluşturup x-user-id ekliyoruz
             ServerHttpRequest mutatedRequest = exchange.getRequest().mutate()
                     .header("x-user-id", userId.toString())
                     .build();
 
-            // Yeni Request'i içeren Exchange nesnesi
             ServerWebExchange mutatedExchange = exchange.mutate()
                     .request(mutatedRequest)
                     .build();
 
-            // Filtre zincirine, değiştirilmiş Exchange ile devam ediyoruz
             return chain.filter(mutatedExchange);
 
         } catch (Exception e) {
