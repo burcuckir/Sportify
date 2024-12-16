@@ -1,0 +1,19 @@
+{
+  "request": {
+    "method": "POST",
+    "url": "/api/payment/pay",
+    "bodyPatterns": [
+      { "matchesJsonPath": "$[?(@.cvv != 123)]" }
+    ]
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "isSuccess": false,
+      "message": "Ödeme başarısız."
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}
