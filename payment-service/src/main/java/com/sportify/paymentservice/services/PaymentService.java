@@ -19,6 +19,7 @@ import com.sportify.paymentservice.queuemessages.OrderCreatedMessage;
 import com.sportify.paymentservice.repositories.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -38,6 +39,7 @@ public class PaymentService {
     @Autowired
     private RabbitMQMessageService messageService;
 
+    @Transactional
     public PayResponse pay(String userId, PayRequest request) {
         BasketResponse basket = reservationApiClient.getBasket(userId);
 

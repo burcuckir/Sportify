@@ -11,10 +11,10 @@ import org.springframework.web.client.RestTemplate;
 public class ReservationApiClient extends BaseApiClient {
 
     @Value("${reservation.api.base.url}")
-    private static String url;
+    private String url;
 
     public ReservationApiClient() {
-        super(new RestTemplate(), url);
+        super(new RestTemplate(), "http://localhost:8082");
     }
 
     public BasketResponse getBasket(String userId) {

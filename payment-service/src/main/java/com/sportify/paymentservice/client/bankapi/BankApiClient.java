@@ -15,7 +15,7 @@ public class BankApiClient extends BaseApiClient {
     private static String url;
 
     public BankApiClient() {
-        super(new RestTemplate(), url);
+        super(new RestTemplate(), "http://localhost:8083"); //TODO:DÜZELT
     }
 
     public BankPayResponse pay(BankPayRequest request) {
