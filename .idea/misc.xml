@@ -9,6 +9,7 @@
         <option value="$PROJECT_DIR$/reservation-service/pom.xml" />
         <option value="$PROJECT_DIR$/gateway/pom.xml" />
         <option value="$PROJECT_DIR$/infrastructure/pom.xml" />
+        <option value="$PROJECT_DIR$/job-scheduler/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

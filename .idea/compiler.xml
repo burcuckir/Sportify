@@ -9,6 +9,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="user-service" />
         <module name="payment-service" />
+        <module name="job-scheduler" />
         <module name="gateway" />
         <module name="reservation-service" />
       </profile>
@@ -21,6 +22,7 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="gateway" options="-parameters" />
       <module name="infrastructure" options="-parameters" />
+      <module name="job-scheduler" options="-parameters" />
       <module name="payment-service" options="-parameters" />
       <module name="reservation-service" options="-parameters" />
       <module name="user-service" options="-parameters" />
