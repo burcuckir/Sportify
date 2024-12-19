@@ -1,4 +1,4 @@
-package com.sportify.reservationservice.infrastructure;
+package org.sportify;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;

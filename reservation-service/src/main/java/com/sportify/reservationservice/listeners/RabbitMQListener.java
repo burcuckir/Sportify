@@ -1,9 +1,9 @@
 package com.sportify.reservationservice.listeners;
 
 import com.sportify.reservationservice.configuration.RabbitMQConfig;
-import com.sportify.reservationservice.infrastructure.JsonConverter;
 import com.sportify.reservationservice.queuemessages.OrderCreatedMessage;
 import com.sportify.reservationservice.services.OrderService;
+import org.sportify.JsonConverter;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
