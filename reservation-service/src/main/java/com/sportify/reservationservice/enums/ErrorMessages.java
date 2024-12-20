@@ -9,7 +9,7 @@ import java.util.Objects;
 
 @Getter
 @AllArgsConstructor
-public enum ErrorMessages implements ErrorMessagesProvider {
+public enum ErrorMessages {
 
     SCHEDULE_NOT_AVAILABLE("Schedule not available","ERR100"),
     SCHEDULE_EXPIRED("Schedule expired","ERR101"),
@@ -19,10 +19,4 @@ public enum ErrorMessages implements ErrorMessagesProvider {
 
     private final String MESSAGE;
     private final String CODE;
-
-    @Override
-    public String getMessageWithCode(String code){
-        return Objects.requireNonNull(Arrays.stream(ErrorMessages.values()).filter(m ->
-                m.getCODE().equals(code)).findFirst().orElse(null)).getMESSAGE();
-    }
 }

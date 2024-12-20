@@ -1,6 +1,6 @@
 package com.sportify.paymentservice.client.reservationapi;
 
-import com.sportify.paymentservice.client.BaseApiClient;
+import org.sportify.BaseApiClient;
 import com.sportify.paymentservice.client.reservationapi.models.BasketResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;

@@ -1,4 +1,4 @@
-package com.sportify.paymentservice.client;
+package org.sportify;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
