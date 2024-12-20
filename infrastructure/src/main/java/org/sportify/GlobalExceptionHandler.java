@@ -1,7 +1,5 @@
-package com.sportify.reservationservice.infrastructure;
+package org.sportify;
 
-import com.sportify.reservationservice.enums.ErrorMessages;
-import com.sportify.reservationservice.models.response.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -16,11 +14,18 @@ import java.util.Map;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+    private final ErrorMessagesProvider errorMessagesProvider;
+
+    public GlobalExceptionHandler(ErrorMessagesProvider errorMessagesProvider) {
+        this.errorMessagesProvider = errorMessagesProvider;
+    }
+
     @ExceptionHandler(Exception.class)
     @ResponseBody
     public ResponseEntity<ErrorResponse> handleException(Exception ex) {
         ErrorResponse response = new ErrorResponse();
-        response.setMessage(ErrorMessages.getMessageWithCode(ex.getMessage()));
+        String message = errorMessagesProvider.getMessageWithCode(ex.getMessage());
+        response.setMessage(message);
         response.setCode(ex.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }

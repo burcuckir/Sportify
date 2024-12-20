@@ -2,13 +2,14 @@ package com.sportify.reservationservice.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.sportify.ErrorMessagesProvider;
 
 import java.util.Arrays;
 import java.util.Objects;
 
 @Getter
 @AllArgsConstructor
-public enum ErrorMessages {
+public enum ErrorMessages implements ErrorMessagesProvider {
 
     SCHEDULE_NOT_AVAILABLE("Schedule not available","ERR100"),
     SCHEDULE_EXPIRED("Schedule expired","ERR101"),
@@ -19,7 +20,8 @@ public enum ErrorMessages {
     private final String MESSAGE;
     private final String CODE;
 
-    public static String getMessageWithCode(String code){
+    @Override
+    public String getMessageWithCode(String code){
         return Objects.requireNonNull(Arrays.stream(ErrorMessages.values()).filter(m ->
                 m.getCODE().equals(code)).findFirst().orElse(null)).getMESSAGE();
     }

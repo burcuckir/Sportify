@@ -1,4 +1,4 @@
-package com.sportify.reservationservice.models.response;
+package org.sportify;
 
 import lombok.Getter;
 import lombok.Setter;
