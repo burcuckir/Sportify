@@ -1,4 +1,4 @@
-package com.sportify.userservice.infrastructure.hashing;
+package org.sportify.hashing;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

@@ -2,7 +2,6 @@ package com.sportify.userservice.controllers;
 
 
 import com.sportify.userservice.enums.ErrorMessages;
-import com.sportify.userservice.infrastructure.jwt.annotations.JwtAuthenticated;
 import com.sportify.userservice.models.request.LoginRequest;
 import com.sportify.userservice.models.request.RegisterRequest;
 import com.sportify.userservice.models.request.UpdatePasswordRequest;
@@ -12,6 +11,9 @@ import com.sportify.userservice.services.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
+
+import org.sportify.BaseController;
+import org.sportify.jwt.annotations.JwtAuthenticated;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

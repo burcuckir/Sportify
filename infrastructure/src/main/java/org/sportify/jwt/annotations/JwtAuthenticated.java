@@ -1,4 +1,4 @@
-package com.sportify.userservice.infrastructure.jwt.annotations;
+package org.sportify.jwt.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

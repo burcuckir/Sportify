@@ -1,7 +1,6 @@
-package com.sportify.userservice.infrastructure.jwt;
+package org.sportify.jwt;
 
-import com.sportify.userservice.exceptions.ExpiredTokenException;
-import com.sportify.userservice.exceptions.InvalidTokenException;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
@@ -39,7 +38,7 @@ public class JwtTokenProvider {
 
     public JwtModel getJwtModel(String token){
         if (!validateToken(token))
-            throw new InvalidTokenException();
+            throw new JwtException("Token not valid !");
 
         JwtModel jwtModel = new JwtModel();
         var body = Jwts.parser()
@@ -57,7 +56,7 @@ public class JwtTokenProvider {
             Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
             return true;
         } catch (JwtException | IllegalArgumentException e) {
-            throw new ExpiredTokenException();
+            throw new JwtException("Token Not Valid");
         }
     }
 }

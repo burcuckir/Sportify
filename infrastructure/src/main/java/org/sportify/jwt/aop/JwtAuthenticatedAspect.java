@@ -1,9 +1,9 @@
-package com.sportify.userservice.infrastructure.jwt.aop;
+package org.sportify.jwt.aop;
 
-import com.sportify.userservice.controllers.BaseController;
-import com.sportify.userservice.infrastructure.jwt.JwtModel;
-import com.sportify.userservice.infrastructure.jwt.JwtTokenProvider;
 import jakarta.servlet.http.HttpServletRequest;
+import org.sportify.BaseController;
+import org.sportify.jwt.JwtModel;
+import org.sportify.jwt.JwtTokenProvider;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
@@ -20,7 +20,7 @@ public class JwtAuthenticatedAspect {
         this.jwtTokenProvider = jwtTokenProvider;
     }
 
-    @Before("@annotation(com.sportify.userservice.infrastructure.jwt.annotations.JwtAuthenticated) && args(request,..)")
+    @Before("@annotation(org.sportify.jwt.annotations.JwtAuthenticated) && args(request,..)")
     public void beforeJwtAuthenticatedMethod(JoinPoint joinPoint, HttpServletRequest request) {
         Object target = joinPoint.getTarget();
         if (target instanceof BaseController) {
@@ -30,7 +30,7 @@ public class JwtAuthenticatedAspect {
         }
     }
 
-    @After("@annotation(com.sportify.userservice.infrastructure.jwt.annotations.JwtAuthenticated)")
+    @After("@annotation(org.sportify.jwt.annotations.JwtAuthenticated)")
     public void afterJwtAuthenticatedMethod(JoinPoint joinPoint) {
         Object target = joinPoint.getTarget();
         if (target instanceof BaseController) {

@@ -1,6 +1,7 @@
-package com.sportify.userservice.controllers;
+package org.sportify;
 
-import com.sportify.userservice.infrastructure.jwt.JwtModel;
+
+import org.sportify.jwt.JwtModel;
 
 public abstract class BaseController {
 

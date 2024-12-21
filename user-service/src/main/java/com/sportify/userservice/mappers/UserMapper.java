@@ -1,10 +1,10 @@
 package com.sportify.userservice.mappers;
 
 import com.sportify.userservice.entities.User;
-import com.sportify.userservice.infrastructure.hashing.PasswordSecurityUtil;
 import com.sportify.userservice.models.request.RegisterRequest;
 import com.sportify.userservice.models.response.UpdatedPasswordResponse;
 import com.sportify.userservice.models.response.UserDetailResponse;
+import org.sportify.hashing.PasswordSecurityUtil;
 
 import java.sql.Date;
 

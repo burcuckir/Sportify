@@ -22,9 +22,4 @@ public enum ErrorMessages {
 
     private final String MESSAGE;
     private final String CODE;
-
-    public static String getMessageWithCode(String code){
-        return Objects.requireNonNull(Arrays.stream(ErrorMessages.values()).filter(m ->
-                m.getCODE().equals(code)).findFirst().orElse(null)).getMESSAGE();
-    }
 }

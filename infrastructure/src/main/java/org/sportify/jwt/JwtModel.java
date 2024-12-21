@@ -1,4 +1,4 @@
-package com.sportify.userservice.infrastructure.jwt;
+package org.sportify.jwt;
 
 import lombok.Getter;
 import lombok.Setter;
