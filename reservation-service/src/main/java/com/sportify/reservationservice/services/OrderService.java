@@ -40,9 +40,6 @@ public class OrderService {
         if (basket == null)
             throw new BasketNotFoundException();
 
-//        if(!basket.getTotalPrice().equals(amount) )
-//            throw new RuntimeException("Ödemeyi iptal et.");
-
         basket.getBasketItems().forEach(item -> {
             Schedule schedule = item.getSchedule();
             schedule.reserved();

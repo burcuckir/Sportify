@@ -55,8 +55,6 @@ public class BasketService {
             throw new ScheduleNotAvailableException();
         }
 
-      //  schedule.validateScheduleAvailability();
-
         BasketItem basketItem = new BasketItem();
         basketItem.setSchedule(schedule);
         basketItem.setBasket(basket);
