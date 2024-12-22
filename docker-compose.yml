@@ -1,0 +1,148 @@
+version: "3.8"
+
+services:
+  gateway:
+    build:
+      context: .
+      dockerfile: ./gateway/Dockerfile
+    container_name: gateway
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+
+  job-scheduler:
+    build:
+      context: .
+      dockerfile: ./job-scheduler/Dockerfile
+    container_name: job-scheduler
+    ports:
+      - "8086:8086"
+    networks:
+      - app-network
+
+  user-db:
+    image: postgres:15
+    container_name: user-db
+    environment:
+      POSTGRES_USER: sportify
+      POSTGRES_PASSWORD: sportify123*
+      POSTGRES_DB: user_service_db
+    ports:
+      - "5432:5432"
+    networks:
+      - app-network
+
+  user-service:
+    build:
+      context: .
+      dockerfile: ./user-service/Dockerfile
+    container_name: user-service
+    ports:
+      - "8081:8081"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://user-db:5432/user_service_db
+      SPRING_DATASOURCE_USERNAME: sportify
+      SPRING_DATASOURCE_PASSWORD: sportify123*
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    depends_on:
+      - user-db
+    networks:
+      - app-network
+
+  reservation-db:
+    image: postgres:15
+    container_name: reservation-db
+    environment:
+      POSTGRES_USER: sportify
+      POSTGRES_PASSWORD: sportify123*
+      POSTGRES_DB: reservation_service_db
+    ports:
+      - "5433:5432"
+    networks:
+      - app-network
+
+  reservation-service:
+    build:
+      context: .
+      dockerfile: ./reservation-service/Dockerfile
+    container_name: reservation-service
+    ports:
+      - "8082:8082"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://reservation-db:5432/reservation_service_db
+      SPRING_DATASOURCE_USERNAME: sportify
+      SPRING_DATASOURCE_PASSWORD: sportify123*
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: guest
+      SPRING_RABBITMQ_PASSWORD: guest
+    depends_on:
+      - reservation-db
+      - rabbitmq
+    networks:
+      - app-network
+
+  payment-db:
+    image: postgres:15
+    container_name: payment-db
+    environment:
+      POSTGRES_USER: sportify
+      POSTGRES_PASSWORD: sportify123*
+      POSTGRES_DB: payment_service_db
+    ports:
+      - "5434:5432"
+    networks:
+      - app-network
+
+  payment-service:
+    build:
+      context: .
+      dockerfile: ./payment-service/Dockerfile
+    container_name: payment-service
+    ports:
+      - "8084:8084"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://payment-db:5432/payment_service_db
+      SPRING_DATASOURCE_USERNAME: sportify
+      SPRING_DATASOURCE_PASSWORD: sportify123*
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: guest
+      SPRING_RABBITMQ_PASSWORD: guest
+      WIREMOCK_BASE_URL: http://wiremock:8080
+      RESERVATION_API_BASE_URL: http://reservation-service:8082
+
+    depends_on:
+      - payment-db
+      - rabbitmq
+      - wiremock
+    networks:
+      - app-network
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672" # RabbitMQ için default port
+      - "15672:15672" # RabbitMQ Management UI için port
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+
+  wiremock:
+    build:
+      context: .
+      dockerfile: ./wiremock-service/Dockerfile
+    container_name: wiremock
+    ports:
+      - "8083:8080"
+
+
+networks:
+  app-network:
+    driver: bridge
