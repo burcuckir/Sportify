@@ -1,7 +1,5 @@
 package com.sportify.userservice.controllers;
 
-
-import com.sportify.userservice.enums.ErrorMessages;
 import com.sportify.userservice.models.request.LoginRequest;
 import com.sportify.userservice.models.request.RegisterRequest;
 import com.sportify.userservice.models.request.UpdatePasswordRequest;
@@ -13,22 +11,22 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
+import lombok.RequiredArgsConstructor;
 import org.sportify.BaseController;
 import org.sportify.jwt.annotations.JwtAuthenticated;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/users")
 @Tag(name = "User Management", description = "Operations related to user management")
 public class UserController extends BaseController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     @PostMapping("")
     public ResponseEntity<UserDetailResponse> register(@Valid @RequestBody RegisterRequest user) {
@@ -38,7 +36,7 @@ public class UserController extends BaseController {
 
     @PostMapping("/login")
     public ResponseEntity<UserLoginResponse> login(@Valid @RequestBody LoginRequest request) {
-        UserLoginResponse userLogin =userService.login(request);
+        UserLoginResponse userLogin = userService.login(request);
         if (userLogin != null) {
             return ResponseEntity.ok(userLogin);
         } else {

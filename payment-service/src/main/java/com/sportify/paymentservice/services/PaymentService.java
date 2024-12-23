@@ -16,28 +16,26 @@ import com.sportify.paymentservice.models.requests.PayRequest;
 import com.sportify.paymentservice.models.response.PayResponse;
 import com.sportify.paymentservice.queuemessages.OrderCreatedMessage;
 import com.sportify.paymentservice.repositories.TransactionRepository;
+import lombok.RequiredArgsConstructor;
 import org.sportify.RabbitMQMessageService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Objects;
 import java.util.UUID;
 
+@RequiredArgsConstructor
 @Service
 public class PaymentService {
 
-    @Autowired
-    private BankApiClient bankApiClient;
 
-    @Autowired
-    private ReservationApiClient reservationApiClient;
+    private final BankApiClient bankApiClient;
 
-    @Autowired
-    private TransactionRepository transactionRepository;
+    private final ReservationApiClient reservationApiClient;
 
-    @Autowired
-    private RabbitMQMessageService messageService;
+    private final TransactionRepository transactionRepository;
+
+    private final RabbitMQMessageService messageService;
 
     @Transactional
     public PayResponse pay(String userId, PayRequest request) {

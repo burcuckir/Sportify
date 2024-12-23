@@ -2,7 +2,7 @@ package com.sportify.reservationservice.controllers;
 
 import com.sportify.reservationservice.models.response.FacilityListResponse;
 import com.sportify.reservationservice.services.FacilityService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.UUID;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/facility")
 public class FacilityController {
 
-    @Autowired
-    private FacilityService facilityService;
+    private final FacilityService facilityService;
 
     @GetMapping("/{id}")
     public ResponseEntity<FacilityListResponse> getFacilityById(@PathVariable UUID id) {

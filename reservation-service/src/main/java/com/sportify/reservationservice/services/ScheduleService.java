@@ -8,7 +8,7 @@ import com.sportify.reservationservice.models.request.AddScheduleRequest;
 import com.sportify.reservationservice.models.response.ScheduleListResponse;
 import com.sportify.reservationservice.repositories.FacilityRepository;
 import com.sportify.reservationservice.repositories.ScheduleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -17,15 +17,15 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
+@RequiredArgsConstructor
 @Service
 public class ScheduleService {
+
     private final Integer MAX_DATE = 5; //TODO:Consul'e taşı
 
-    @Autowired
-    private ScheduleRepository scheduleRepository;
+    private final ScheduleRepository scheduleRepository;
 
-    @Autowired
-    private FacilityRepository facilityRepository;
+    private final FacilityRepository facilityRepository;
 
     public ScheduleListResponse getScheduleByFacility(UUID facilityId) {
         LocalDate localMaxDate = LocalDate.now().plusDays(MAX_DATE);

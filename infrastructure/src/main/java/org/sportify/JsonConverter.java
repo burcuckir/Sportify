@@ -1,24 +1,25 @@
 package org.sportify;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.stereotype.Service;
 
 @Service
 public class JsonConverter {
 
-    @Autowired
-    private ObjectMapper objectMapper;
+    private static final ObjectMapper objectMapper = new ObjectMapper();
 
-    public String convertToJson(Object object) {
+    public static String convertToJson(Object object) {
+        objectMapper.registerModule(new JavaTimeModule());
         try {
-            return objectMapper.writeValueAsString(object);
+            return objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(object);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
-    public <T> T convertFromJson(String jsonString, Class<T> clazz) {
+
+    public static <T> T convertFromJson(String jsonString, Class<T> clazz) {
         try {
             return objectMapper.readValue(jsonString, clazz);
         } catch (Exception e) {

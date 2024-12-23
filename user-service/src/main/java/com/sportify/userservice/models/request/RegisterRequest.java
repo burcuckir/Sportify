@@ -24,6 +24,6 @@ public class RegisterRequest {
 
     private LocalDate birthday;
 
-    @Pattern(regexp = "^\\+?[0-9]{10,15}$", message = "Geçerli bir telefon numarası giriniz.")
+    @Pattern(regexp = "^\\+?[0-9]{10,15}$", message = "Enter a valid phone number.")
     private String phoneNumber;
 }

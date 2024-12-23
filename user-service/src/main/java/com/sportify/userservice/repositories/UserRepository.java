@@ -12,6 +12,8 @@ import java.util.UUID;
 public interface UserRepository extends JpaRepository<User, Long> {
     User findByUsername(String username);
     User findById(UUID id);
+    User findByEmail(String email);
+    User findByPhone(String phone);
     @Modifying
     @Transactional
     @Query("UPDATE User u SET u.password = :password WHERE u.username = :username")

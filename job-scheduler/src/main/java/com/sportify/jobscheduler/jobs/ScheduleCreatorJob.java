@@ -2,7 +2,7 @@ package com.sportify.jobscheduler.jobs;
 
 import com.sportify.jobscheduler.client.reservationapi.ReservationApiClient;
 import com.sportify.jobscheduler.mappers.JobMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -12,14 +12,14 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
+@RequiredArgsConstructor
 @Component
 public class ScheduleCreatorJob {
 
     @Value("${tennis.facility.ids}")
     private String facilityId;
 
-    @Autowired
-    private ReservationApiClient reservationApiClient;
+    private final ReservationApiClient reservationApiClient;
 
     @Scheduled(cron = "0 0 10-22 * * *")
 

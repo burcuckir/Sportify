@@ -2,10 +2,7 @@ package com.sportify.userservice.services;
 
 
 import com.sportify.userservice.entities.User;
-import com.sportify.userservice.exceptions.InvalidPasswordException;
-import com.sportify.userservice.exceptions.SamePasswordErrorException;
-import com.sportify.userservice.exceptions.UserAlreadyExistException;
-import com.sportify.userservice.exceptions.UserNotFoundException;
+import com.sportify.userservice.exceptions.*;
 import com.sportify.userservice.mappers.UserMapper;
 import com.sportify.userservice.models.request.LoginRequest;
 import com.sportify.userservice.models.request.RegisterRequest;
@@ -14,27 +11,33 @@ import com.sportify.userservice.models.response.UpdatedPasswordResponse;
 import com.sportify.userservice.models.response.UserDetailResponse;
 import com.sportify.userservice.models.response.UserLoginResponse;
 import com.sportify.userservice.repositories.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.sportify.hashing.PasswordSecurityUtil;
 import org.sportify.jwt.JwtModel;
 import org.sportify.jwt.JwtTokenProvider;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
+@RequiredArgsConstructor
 @Service
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private JwtTokenProvider jwtTokenProvider;
-
+    private final JwtTokenProvider jwtTokenProvider;
 
     public UserDetailResponse register(RegisterRequest registerRequest) {
         if (userRepository.findByUsername(registerRequest.getUsername()) != null) {
             throw new UserAlreadyExistException();
+        }
+
+        if (userRepository.findByEmail(registerRequest.getEmail()) != null) {
+            throw new EmailAlreadyExistException();
+        }
+
+        if (userRepository.findByPhone(registerRequest.getPhoneNumber()) != null) {
+            throw new PhoneAlreadyExistException();
         }
 
         User user = UserMapper.mapToUser(registerRequest);

@@ -1,17 +1,17 @@
 package com.sportify.jobscheduler.jobs;
 
 import com.sportify.jobscheduler.client.reservationapi.ReservationApiClient;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
+@RequiredArgsConstructor
 @Component
 public class BasketCleanerJob {
 
-    @Autowired
-    private ReservationApiClient reservationApiClient;
+    private final ReservationApiClient reservationApiClient;
 
     @Scheduled(cron = "0 0/1 * * * *")
     public void executeTask() {

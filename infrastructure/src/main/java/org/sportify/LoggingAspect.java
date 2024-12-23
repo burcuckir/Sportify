@@ -1,7 +1,7 @@
 package org.sportify;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.SneakyThrows;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -19,12 +19,15 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 @Aspect
 @Component
 public class LoggingAspect {
-
-    private final ObjectMapper objectMapper = new ObjectMapper();
     private static final Logger logger = LoggerFactory.getLogger(LoggingAspect.class);
 
     @Around("execution(* *..controllers..*(..))")
-    public Object logRequestAndResponse(ProceedingJoinPoint joinPoint) throws Throwable {
+    public Object logRequestAndResponse(ProceedingJoinPoint joinPoint) {
+        logRequest(joinPoint);
+        return logResponse(joinPoint);
+    }
+
+    private void logRequest(ProceedingJoinPoint joinPoint) {
         String endpoint = joinPoint.getSignature().getName();
         Object[] args = joinPoint.getArgs();
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
@@ -32,7 +35,6 @@ public class LoggingAspect {
         HttpServletRequest request =
                 ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         String httpMethod = request.getMethod();
-
         logger.info("Endpoint: {}", endpoint);
         logger.info("Http Method: {}", httpMethod);
         if (args.length != 0) {
@@ -41,7 +43,7 @@ public class LoggingAspect {
                 java.lang.reflect.Parameter parameter = parameters[i];
 
                 if (parameter.isAnnotationPresent(RequestBody.class)) {
-                    logger.info("Request Body: \n{}", objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(arg));
+                    logger.info("Request Body: \n{}", JsonConverter.convertToJson(arg));
                 }
 
                 if (parameter.isAnnotationPresent(RequestHeader.class)) {
@@ -50,15 +52,18 @@ public class LoggingAspect {
                 }
             }
         }
+    }
 
+    @SneakyThrows
+    private Object logResponse(ProceedingJoinPoint joinPoint) {
         Object result;
         try {
             result = joinPoint.proceed();
             if (result instanceof ResponseEntity<?> responseEntity) {
                 logger.info("Response Status Code: {}", responseEntity.getStatusCode());
-                logger.info("Response Body:\n {}", objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(responseEntity.getBody()));
+                logger.info("Response Body:\n {}", JsonConverter.convertToJson(responseEntity.getBody()));
             } else {
-                logger.info("Response:\n {}", objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(result));
+                logger.info("Response:\n {}", JsonConverter.convertToJson(result));
             }
         } catch (Exception ex) {
             throw ex;

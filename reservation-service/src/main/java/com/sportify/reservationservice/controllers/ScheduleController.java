@@ -4,19 +4,19 @@ import com.sportify.reservationservice.models.request.AddScheduleRequest;
 import com.sportify.reservationservice.models.response.ScheduleListResponse;
 import com.sportify.reservationservice.services.ScheduleService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("/schedule")
 public class ScheduleController {
 
-    @Autowired
-    private ScheduleService scheduleService;
+    private final ScheduleService scheduleService;
 
     @GetMapping("/facility/{id}")
     public ResponseEntity<ScheduleListResponse> getScheduleByFacilityId(@PathVariable UUID id) {
