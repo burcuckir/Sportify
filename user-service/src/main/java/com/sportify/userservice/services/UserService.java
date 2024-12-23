@@ -12,6 +12,7 @@ import com.sportify.userservice.models.request.RegisterRequest;
 import com.sportify.userservice.models.request.UpdatePasswordRequest;
 import com.sportify.userservice.models.response.UpdatedPasswordResponse;
 import com.sportify.userservice.models.response.UserDetailResponse;
+import com.sportify.userservice.models.response.UserLoginResponse;
 import com.sportify.userservice.repositories.UserRepository;
 import org.sportify.hashing.PasswordSecurityUtil;
 import org.sportify.jwt.JwtModel;
@@ -42,7 +43,7 @@ public class UserService {
         return UserMapper.mapToUserDetailResponse(user);
     }
 
-    public String login(LoginRequest request) {
+    public UserLoginResponse login(LoginRequest request) {
         User user = userRepository.findByUsername(request.getUsername());
         if (user == null)
             throw new UserNotFoundException();
@@ -50,7 +51,8 @@ public class UserService {
         if (!PasswordSecurityUtil.checkPassword(request.getPassword(), user.getPassword()))
             throw new InvalidPasswordException();
 
-        return jwtTokenProvider.createToken(user.getUsername(), user.getId());
+        String token = jwtTokenProvider.createToken(user.getUsername(), user.getId());
+        return UserMapper.mapToUserLoginResponse(user, token);
     }
 
     public UserDetailResponse getUserDetail(UUID id) {

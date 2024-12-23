@@ -7,6 +7,7 @@ import com.sportify.userservice.models.request.RegisterRequest;
 import com.sportify.userservice.models.request.UpdatePasswordRequest;
 import com.sportify.userservice.models.response.UpdatedPasswordResponse;
 import com.sportify.userservice.models.response.UserDetailResponse;
+import com.sportify.userservice.models.response.UserLoginResponse;
 import com.sportify.userservice.services.UserService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
@@ -36,12 +37,12 @@ public class UserController extends BaseController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@Valid @RequestBody LoginRequest request) {
-        String token = userService.login(request);
-        if (token != null) {
-            return ResponseEntity.ok(token);
+    public ResponseEntity<UserLoginResponse> login(@Valid @RequestBody LoginRequest request) {
+        UserLoginResponse userLogin =userService.login(request);
+        if (userLogin != null) {
+            return ResponseEntity.ok(userLogin);
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ErrorMessages.UNAUTHORIZED.getMESSAGE());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
     }
 

@@ -4,6 +4,7 @@ import com.sportify.userservice.entities.User;
 import com.sportify.userservice.models.request.RegisterRequest;
 import com.sportify.userservice.models.response.UpdatedPasswordResponse;
 import com.sportify.userservice.models.response.UserDetailResponse;
+import com.sportify.userservice.models.response.UserLoginResponse;
 import org.sportify.hashing.PasswordSecurityUtil;
 
 import java.sql.Date;
@@ -25,6 +26,13 @@ public class UserMapper {
         userDetailResponse.setUsername(user.getUsername());
         userDetailResponse.setEmail(user.getEmail());
         return userDetailResponse;
+    }
+
+    public static UserLoginResponse mapToUserLoginResponse(User user, String token) {
+        UserLoginResponse userLoginResponse = new UserLoginResponse();
+        userLoginResponse.setId(user.getId());
+        userLoginResponse.setToken(token);
+        return userLoginResponse;
     }
 
     public static UpdatedPasswordResponse mapToUpdatedPasswordResponse(){
