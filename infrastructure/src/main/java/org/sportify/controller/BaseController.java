@@ -1,4 +1,4 @@
-package org.sportify;
+package org.sportify.controller;
 
 
 import org.sportify.jwt.JwtModel;

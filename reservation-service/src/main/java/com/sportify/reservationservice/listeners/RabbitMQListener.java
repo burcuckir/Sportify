@@ -4,7 +4,7 @@ import com.sportify.reservationservice.configuration.RabbitMQConfig;
 import com.sportify.reservationservice.queuemessages.OrderCreatedMessage;
 import com.sportify.reservationservice.services.OrderService;
 import lombok.RequiredArgsConstructor;
-import org.sportify.JsonConverter;
+import org.sportify.jsonconverter.JsonConverter;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 

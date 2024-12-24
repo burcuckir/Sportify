@@ -1,4 +1,4 @@
-package org.sportify;
+package org.sportify.logging;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.SneakyThrows;
@@ -8,6 +8,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.sportify.jsonconverter.JsonConverter;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,7 +28,7 @@ public class LoggingAspect {
         return logResponse(joinPoint);
     }
 
-    private void logRequest(ProceedingJoinPoint joinPoint) {
+    private void logRequest(ProceedingJoinPoint joinPoint) { //todo:burası çok mu karmaşık oldu
         String endpoint = joinPoint.getSignature().getName();
         Object[] args = joinPoint.getArgs();
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
@@ -35,36 +36,42 @@ public class LoggingAspect {
         HttpServletRequest request =
                 ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
         String httpMethod = request.getMethod();
-        logger.info("Endpoint: {}", endpoint);
-        logger.info("Http Method: {}", httpMethod);
+
+        StringBuilder logBuilder = new StringBuilder();
+        logBuilder.append("Endpoint: ").append(endpoint).append("\n");
+        logBuilder.append("Http Method: ").append(httpMethod).append("\n");
         if (args.length != 0) {
             for (int i = 0; i < parameters.length; i++) {
                 Object arg = args[i];
                 java.lang.reflect.Parameter parameter = parameters[i];
 
                 if (parameter.isAnnotationPresent(RequestBody.class)) {
-                    logger.info("Request Body: \n{}", JsonConverter.convertToJson(arg));
+                    logBuilder.append("Request Body: \n").append(JsonConverter.convertToJson(arg)).append("\n");
                 }
 
                 if (parameter.isAnnotationPresent(RequestHeader.class)) {
                     String headerName = parameter.getAnnotation(RequestHeader.class).value();
-                    logger.info("Request Header:\n [{}]: {}", headerName, arg);
+                    logBuilder.append("Request Header: [").append(headerName).append("]: ").append(arg).append("\n");
                 }
             }
         }
+        logger.info("{}", logBuilder);
     }
 
     @SneakyThrows
     private Object logResponse(ProceedingJoinPoint joinPoint) {
+        StringBuilder logBuilder = new StringBuilder();
+
         Object result;
         try {
             result = joinPoint.proceed();
             if (result instanceof ResponseEntity<?> responseEntity) {
-                logger.info("Response Status Code: {}", responseEntity.getStatusCode());
-                logger.info("Response Body:\n {}", JsonConverter.convertToJson(responseEntity.getBody()));
+                logBuilder.append("Response:{\n Status Code: ").append(responseEntity.getStatusCode()).append("\n");
+                logBuilder.append("Body:\n").append(JsonConverter.convertToJson(responseEntity.getBody())).append("\n}");
             } else {
-                logger.info("Response:\n {}", JsonConverter.convertToJson(result));
+                logBuilder.append("Response:\n").append(JsonConverter.convertToJson(result)).append("\n");
             }
+            logger.info("{}", logBuilder);
         } catch (Exception ex) {
             throw ex;
         }

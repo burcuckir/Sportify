@@ -1,4 +1,4 @@
-package org.sportify;
+package org.sportify.clientprovider;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;

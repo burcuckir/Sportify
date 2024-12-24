@@ -2,10 +2,6 @@ package com.sportify.reservationservice.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.sportify.ErrorMessagesProvider;
-
-import java.util.Arrays;
-import java.util.Objects;
 
 @Getter
 @AllArgsConstructor

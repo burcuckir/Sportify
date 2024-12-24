@@ -1,7 +1,7 @@
 package org.sportify.jwt.aop;
 
 import jakarta.servlet.http.HttpServletRequest;
-import org.sportify.BaseController;
+import org.sportify.controller.BaseController;
 import org.sportify.jwt.JwtModel;
 import org.sportify.jwt.JwtTokenProvider;
 import org.aspectj.lang.JoinPoint;

@@ -1,4 +1,4 @@
-package org.sportify;
+package org.sportify.errorhandling;
 
 import lombok.Getter;
 import lombok.Setter;

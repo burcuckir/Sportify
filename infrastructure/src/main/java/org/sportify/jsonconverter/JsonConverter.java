@@ -1,4 +1,4 @@
-package org.sportify;
+package org.sportify.jsonconverter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;

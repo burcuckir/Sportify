@@ -1,6 +1,7 @@
-package org.sportify;
+package org.sportify.messageservice;
 
 import lombok.RequiredArgsConstructor;
+import org.sportify.jsonconverter.JsonConverter;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 

@@ -17,7 +17,7 @@ import com.sportify.paymentservice.models.response.PayResponse;
 import com.sportify.paymentservice.queuemessages.OrderCreatedMessage;
 import com.sportify.paymentservice.repositories.TransactionRepository;
 import lombok.RequiredArgsConstructor;
-import org.sportify.RabbitMQMessageService;
+import org.sportify.messageservice.RabbitMQMessageService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

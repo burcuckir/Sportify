@@ -1,12 +1,10 @@
 package com.sportify.jobscheduler.client.reservationapi;
 
 import com.sportify.jobscheduler.client.reservationapi.models.AddScheduleRequest;
-import org.sportify.BaseApiClient;
+import org.sportify.clientprovider.BaseApiClient;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
-import static org.springframework.http.RequestEntity.delete;
 
 @Service
 public class ReservationApiClient extends BaseApiClient {

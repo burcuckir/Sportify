@@ -1,7 +1,7 @@
 package com.sportify.reservationservice.configuration;
 
 import com.sportify.reservationservice.enums.ErrorMessages;
-import org.sportify.ErrorMessagesProvider;
+import org.sportify.errorhandling.ErrorMessagesProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

@@ -1,4 +1,4 @@
-package org.sportify;
+package org.sportify.errorhandling;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
@@ -37,11 +37,12 @@ public class GlobalExceptionHandler {
         response.setMessage(message);
         response.setCode(ex.getMessage());
 
-        logger.error("Exception occurred: {}", ex.getClass().getSimpleName());
-        logger.error("Error Message Code: {}", ex.getMessage());
-        logger.error("HTTP Status: {}", HttpStatus.BAD_REQUEST);
-        logger.error("Error Response: \n{}", objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(response));
-
+        StringBuilder logBuilder = new StringBuilder();
+        logBuilder.append(ex.getClass().getSimpleName()).append("\n");
+        logBuilder.append(ex.getMessage()).append("\n");
+        logBuilder.append(objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(response)).append("\n");
+        logBuilder.append("HTTP Status:").append(HttpStatus.BAD_REQUEST);
+        logger.error("{}",logBuilder);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 

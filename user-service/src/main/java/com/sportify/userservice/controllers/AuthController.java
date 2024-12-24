@@ -3,7 +3,7 @@ package com.sportify.userservice.controllers;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
-import org.sportify.BaseController;
+import org.sportify.controller.BaseController;
 import org.sportify.jwt.JwtModel;
 import org.sportify.jwt.annotations.JwtAuthenticated;
 import org.springframework.http.HttpStatus;
