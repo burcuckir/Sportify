@@ -1,5 +1,6 @@
 package com.sportify.reservationservice;
 
+import lombok.SneakyThrows;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -17,16 +18,12 @@ public class DatabaseScriptRunner implements CommandLineRunner {
         this.jdbcTemplate = jdbcTemplate;
     }
 
+    @SneakyThrows
     @Override
-    public void run(String... args) throws Exception {
-        // db.script dosyasını oku
+    public void run(String... args) {
         Path scriptPath = new ClassPathResource("db.script").getFile().toPath();
         String sql = Files.readString(scriptPath);
-
-        // SQL komutlarını çalıştır
         jdbcTemplate.execute(sql);
-
-        System.out.println("db.script başarıyla çalıştırıldı.");
     }
 }
 
