@@ -1,38 +1,36 @@
 package com.sportify.jobscheduler.jobs;
 
 import com.sportify.jobscheduler.client.reservationapi.ReservationApiClient;
+import com.sportify.jobscheduler.client.reservationapi.models.AddScheduleRequest;
 import com.sportify.jobscheduler.mappers.JobMapper;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
 
 @RequiredArgsConstructor
 @Component
 public class ScheduleCreatorJob {
 
-    @Value("${tennis.facility.ids}")
-    private String facilityId;
-
     private final ReservationApiClient reservationApiClient;
+    private static final Logger logger = LoggerFactory.getLogger(ScheduleCreatorJob.class);
 
-    @Scheduled(cron = "0 0 10-22 * * *")
-
-    public void executeTask() {
-        List<UUID> idList = Arrays.stream(facilityId.split(","))
-                .map(UUID::fromString)
-                .toList();
-      // TODO: consul'a ekle.
-        for (UUID id : idList) {
-            var request = JobMapper.mapToAddScheduleRequest(id);
+    @PostConstruct
+    public void runOnStartup() {
+        for (int i = 10; i <= 21; i++) {
+            AddScheduleRequest request = JobMapper.mapToAddScheduleRequest(i);
             reservationApiClient.addSchedule(request);
         }
+    }
 
-        System.out.println("ScheduleCreatorJob executed at: " + LocalDateTime.now());
+    @Scheduled(cron = "0 0 1 * * *")
+    public void executeTask() {
+        runOnStartup();
+
+        logger.info("ScheduleCreatorJob executed at: " + LocalDateTime.now());
     }
 }

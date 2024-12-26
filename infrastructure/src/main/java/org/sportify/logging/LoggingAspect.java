@@ -28,7 +28,7 @@ public class LoggingAspect {
         return logResponse(joinPoint);
     }
 
-    private void logRequest(ProceedingJoinPoint joinPoint) { //todo:burası çok mu karmaşık oldu
+    private void logRequest(ProceedingJoinPoint joinPoint) {
         String endpoint = joinPoint.getSignature().getName();
         Object[] args = joinPoint.getArgs();
         MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
