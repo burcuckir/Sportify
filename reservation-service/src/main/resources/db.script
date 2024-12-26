@@ -1,0 +1,78 @@
+DO $$
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM public.branch WHERE name = 'Futbol') THEN
+        INSERT INTO public.branch (id, created_at, updated_at, name, is_active)
+        VALUES ('7d35de37-8c94-4a09-a27b-195a1e67a48d', '2024-08-25 16:56:19.000000', '2024-08-25 16:56:21.000000', 'Futbol', true);
+END IF;
+
+    IF NOT EXISTS (SELECT 1 FROM public.branch WHERE name = 'Tenis') THEN
+        INSERT INTO public.branch (id, created_at, updated_at, name, is_active)
+        VALUES ('24339b99-3337-45b2-825d-9a7bba51aebf', '2024-08-25 16:55:46.000000', '2024-08-25 16:55:47.000000', 'Tenis', true);
+END IF;
+
+    IF NOT EXISTS (SELECT 1 FROM public.branch WHERE name = 'Basketbol') THEN
+        INSERT INTO public.branch (id, created_at, updated_at, name, is_active)
+        VALUES ('a304215c-4675-4e9c-a208-4af2cf781857', '2024-08-25 16:55:46.000000', '2024-08-25 16:55:47.000000', 'Basketbol', true);
+END IF;
+
+    IF NOT EXISTS (SELECT 1 FROM public.branch WHERE name = 'Yüzme') THEN
+        INSERT INTO public.branch (id, created_at, updated_at, name, is_active)
+        VALUES ('5f7b3151-ac48-4c16-a382-d7cbbbfa0dfd', '2024-08-25 16:55:46.000000', '2024-08-25 16:55:47.000000', 'Yüzme', true);
+END IF;
+
+    IF NOT EXISTS (SELECT 1 FROM public.branch WHERE name = 'Pilates') THEN
+        INSERT INTO public.branch (id, created_at, updated_at, name, is_active)
+        VALUES ('075c308c-35ec-46f4-9aeb-567f008d7b09', '2024-08-25 16:55:46.000000', '2024-08-25 16:55:47.000000', 'Pilates', true);
+END IF;
+
+    IF NOT EXISTS (SELECT 1 FROM public.facility WHERE name = 'Salon 1') THEN
+        INSERT INTO public.facility (id, created_at, updated_at, name, branch_id, is_active)
+        VALUES ('5300fea1-3b82-4329-8147-bd560fd3e8ca', '2024-09-02 21:30:31.000000', '2024-09-02 21:30:35.000000', 'Salon 1', '24339b99-3337-45b2-825d-9a7bba51aebf', true);
+END IF;
+
+    IF NOT EXISTS (SELECT 1 FROM public.facility WHERE name = 'Salon 2') THEN
+        INSERT INTO public.facility (id, created_at, updated_at, name, branch_id, is_active)
+        VALUES ('38e8cd40-912d-4105-9a15-05900e901afc', '2024-09-02 21:35:56.000000', '2024-09-02 21:35:59.000000', 'Salon 2', '24339b99-3337-45b2-825d-9a7bba51aebf', true);
+END IF;
+
+    IF NOT EXISTS (SELECT 1 FROM public.facility WHERE name = 'Salon 3') THEN
+        INSERT INTO public.facility (id, created_at, updated_at, name, branch_id, is_active)
+        VALUES ('db8df685-2e3a-4832-ad43-25fc7ce1fe86', '2024-09-02 21:30:31.000000', '2024-09-02 21:30:35.000000', 'Salon 3', '7d35de37-8c94-4a09-a27b-195a1e67a48d', true);
+END IF;
+
+    IF NOT EXISTS (SELECT 1 FROM public.facility WHERE name = 'Salon 4') THEN
+        INSERT INTO public.facility (id, created_at, updated_at, name, branch_id, is_active)
+        VALUES ('5c84082d-8571-4a91-969c-1d0174d0833d', '2024-09-02 21:35:56.000000', '2024-09-02 21:35:59.000000', 'Salon 4', '7d35de37-8c94-4a09-a27b-195a1e67a48d', true);
+END IF;
+
+    IF NOT EXISTS (SELECT 1 FROM public.facility WHERE name = 'Salon 5') THEN
+        INSERT INTO public.facility (id, created_at, updated_at, name, branch_id, is_active)
+        VALUES ('4f961a69-6c29-4f11-aa78-55ada1e2b574', '2024-09-02 21:30:31.000000', '2024-09-02 21:30:35.000000', 'Salon 5', 'a304215c-4675-4e9c-a208-4af2cf781857', true);
+END IF;
+
+    IF NOT EXISTS (SELECT 1 FROM public.facility WHERE name = 'Salon 6') THEN
+        INSERT INTO public.facility (id, created_at, updated_at, name, branch_id, is_active)
+        VALUES ('4072033e-d0b3-400d-b54d-4b2beee0e10c', '2024-09-02 21:35:56.000000', '2024-09-02 21:35:59.000000', 'Salon 6', 'a304215c-4675-4e9c-a208-4af2cf781857', true);
+END IF;
+
+    IF NOT EXISTS (SELECT 1 FROM public.facility WHERE name = 'Salon 7') THEN
+        INSERT INTO public.facility (id, created_at, updated_at, name, branch_id, is_active)
+        VALUES ('cf2a0a16-455f-4927-bf5e-4b123f1c00c1', '2024-09-02 21:30:31.000000', '2024-09-02 21:30:35.000000', 'Salon 7', '5f7b3151-ac48-4c16-a382-d7cbbbfa0dfd', true);
+END IF;
+
+    IF NOT EXISTS (SELECT 1 FROM public.facility WHERE name = 'Salon 8') THEN
+        INSERT INTO public.facility (id, created_at, updated_at, name, branch_id, is_active)
+        VALUES ('30577005-b783-4eee-80b7-12eccff463b9', '2024-09-02 21:35:56.000000', '2024-09-02 21:35:59.000000', 'Salon 8', '5f7b3151-ac48-4c16-a382-d7cbbbfa0dfd', true);
+END IF;
+
+    IF NOT EXISTS (SELECT 1 FROM public.facility WHERE name = 'Salon 9') THEN
+        INSERT INTO public.facility (id, created_at, updated_at, name, branch_id, is_active)
+        VALUES ('0cf38c46-38d2-4663-979b-b06596a1172b', '2024-09-02 21:30:31.000000', '2024-09-02 21:30:35.000000', 'Salon 9', '075c308c-35ec-46f4-9aeb-567f008d7b09', true);
+END IF;
+
+    IF NOT EXISTS (SELECT 1 FROM public.facility WHERE name = 'Salon 10') THEN
+        INSERT INTO public.facility (id, created_at, updated_at, name, branch_id, is_active)
+        VALUES ('8c170ee0-f29d-4853-b020-66bb64232c30', '2024-09-02 21:35:56.000000', '2024-09-02 21:35:59.000000', 'Salon 10', '075c308c-35ec-46f4-9aeb-567f008d7b09', true);
+
+END IF;
+END $$;

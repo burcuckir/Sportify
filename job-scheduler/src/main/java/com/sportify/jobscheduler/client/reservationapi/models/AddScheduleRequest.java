@@ -5,13 +5,10 @@ import lombok.Setter;
 
 import java.sql.Time;
 import java.util.Date;
-import java.util.UUID;
 
 @Getter
 @Setter
 public class AddScheduleRequest {
-
-    private UUID facilityId;
     private Date date;
     private Time startTime;
     private Time endTime;

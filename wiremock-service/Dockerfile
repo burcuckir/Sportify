@@ -1,2 +1,2 @@
 FROM wiremock/wiremock:latest
-COPY mappings /home/wiremock/mappings
+COPY ./wiremock-service/mappings /home/wiremock/mappings

@@ -1,11 +1,11 @@
 package com.sportify.userservice.controllers;
 
-import com.sportify.userservice.infrastructure.jwt.JwtModel;
-import com.sportify.userservice.infrastructure.jwt.JwtTokenProvider;
-import com.sportify.userservice.infrastructure.jwt.annotations.JwtAuthenticated;
+
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.sportify.controller.BaseController;
+import org.sportify.jwt.JwtModel;
+import org.sportify.jwt.annotations.JwtAuthenticated;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,9 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/auth")
 @Tag(name = "Authorization Management", description = "Operations related to authorization")
 public class AuthController extends BaseController {
-
-    @Autowired
-    private JwtTokenProvider jwtTokenProvider;
 
     @GetMapping("/validate")
     @JwtAuthenticated

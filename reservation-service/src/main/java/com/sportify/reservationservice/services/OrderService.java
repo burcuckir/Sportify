@@ -9,7 +9,7 @@ import com.sportify.reservationservice.exceptions.BasketNotFoundException;
 import com.sportify.reservationservice.mappers.OrderMapper;
 import com.sportify.reservationservice.models.response.OrderListResponse;
 import com.sportify.reservationservice.repositories.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,17 +17,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@RequiredArgsConstructor
 @Service
 public class OrderService {
 
-    @Autowired
-    private OrderRepository orderRepository;
+    private final OrderRepository orderRepository;
 
-    @Autowired
-    private BasketRepository basketRepository;
+    private final BasketRepository basketRepository;
 
-    @Autowired
-    private ScheduleRepository scheduleRepository;
+    private final ScheduleRepository scheduleRepository;
 
     @Transactional
     public void completeOrder(UUID orderId, UUID userId, Double amount) {
@@ -39,9 +37,6 @@ public class OrderService {
         Basket basket = basketRepository.findByUserId(userId);
         if (basket == null)
             throw new BasketNotFoundException();
-
-//        if(!basket.getTotalPrice().equals(amount) )
-//            throw new RuntimeException("Ödemeyi iptal et.");
 
         basket.getBasketItems().forEach(item -> {
             Schedule schedule = item.getSchedule();

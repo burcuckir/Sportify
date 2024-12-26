@@ -8,14 +8,9 @@
         <option value="$PROJECT_DIR$/payment-service/pom.xml" />
         <option value="$PROJECT_DIR$/reservation-service/pom.xml" />
         <option value="$PROJECT_DIR$/gateway/pom.xml" />
-        <option value="$PROJECT_DIR$/infrastructure/pom.xml" />
         <option value="$PROJECT_DIR$/job-scheduler/pom.xml" />
+        <option value="$PROJECT_DIR$/pom.xml" />
       </list>
-    </option>
-    <option name="ignoredFiles">
-      <set>
-        <option value="$PROJECT_DIR$/infrastructure/pom.xml" />
-      </set>
     </option>
     <option name="workspaceImportForciblyTurnedOn" value="true" />
   </component>

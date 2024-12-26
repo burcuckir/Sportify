@@ -13,7 +13,9 @@ public enum ErrorMessages {
     USER_NOT_FOUND("User not found.", "ERR100"),
     INVALID_PASSWORD("Invalid password.","ERR101"),
     USER_ALREADY_EXIST("User already exist.","ERR102"),
-    SAME_PASSWORD_ERROR("Same Password can not be.","ERR103"),
+    EMAIL_ALREADY_EXIST("Email already exist.","ERR103"),
+    PHONE_ALREADY_EXIST("Phone already exist.","ERR104"),
+    SAME_PASSWORD_ERROR("Same Password can not be.","ERR105"),
     TOKEN_NOT_VALIDATED("Token Not validated.","ERR200"),
     UNAUTHORIZED("Unauthorized.","ERR201"),
     INVALID_TOKEN("Invalid token.","ERR202"),
@@ -22,9 +24,4 @@ public enum ErrorMessages {
 
     private final String MESSAGE;
     private final String CODE;
-
-    public static String getMessageWithCode(String code){
-        return Objects.requireNonNull(Arrays.stream(ErrorMessages.values()).filter(m ->
-                m.getCODE().equals(code)).findFirst().orElse(null)).getMESSAGE();
-    }
 }

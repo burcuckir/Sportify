@@ -2,38 +2,42 @@ package com.sportify.userservice.services;
 
 
 import com.sportify.userservice.entities.User;
-import com.sportify.userservice.exceptions.InvalidPasswordException;
-import com.sportify.userservice.exceptions.SamePasswordErrorException;
-import com.sportify.userservice.exceptions.UserAlreadyExistException;
-import com.sportify.userservice.exceptions.UserNotFoundException;
-import com.sportify.userservice.infrastructure.hashing.PasswordSecurityUtil;
-import com.sportify.userservice.infrastructure.jwt.JwtModel;
-import com.sportify.userservice.infrastructure.jwt.JwtTokenProvider;
+import com.sportify.userservice.exceptions.*;
 import com.sportify.userservice.mappers.UserMapper;
 import com.sportify.userservice.models.request.LoginRequest;
 import com.sportify.userservice.models.request.RegisterRequest;
 import com.sportify.userservice.models.request.UpdatePasswordRequest;
 import com.sportify.userservice.models.response.UpdatedPasswordResponse;
 import com.sportify.userservice.models.response.UserDetailResponse;
+import com.sportify.userservice.models.response.UserLoginResponse;
 import com.sportify.userservice.repositories.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.sportify.hashing.PasswordSecurityUtil;
+import org.sportify.jwt.JwtModel;
+import org.sportify.jwt.JwtTokenProvider;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
+@RequiredArgsConstructor
 @Service
 public class UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private JwtTokenProvider jwtTokenProvider;
-
+    private final JwtTokenProvider jwtTokenProvider;
 
     public UserDetailResponse register(RegisterRequest registerRequest) {
         if (userRepository.findByUsername(registerRequest.getUsername()) != null) {
             throw new UserAlreadyExistException();
+        }
+
+        if (userRepository.findByEmail(registerRequest.getEmail()) != null) {
+            throw new EmailAlreadyExistException();
+        }
+
+        if (userRepository.findByPhone(registerRequest.getPhoneNumber()) != null) {
+            throw new PhoneAlreadyExistException();
         }
 
         User user = UserMapper.mapToUser(registerRequest);
@@ -42,7 +46,7 @@ public class UserService {
         return UserMapper.mapToUserDetailResponse(user);
     }
 
-    public String login(LoginRequest request) {
+    public UserLoginResponse login(LoginRequest request) {
         User user = userRepository.findByUsername(request.getUsername());
         if (user == null)
             throw new UserNotFoundException();
@@ -50,7 +54,8 @@ public class UserService {
         if (!PasswordSecurityUtil.checkPassword(request.getPassword(), user.getPassword()))
             throw new InvalidPasswordException();
 
-        return jwtTokenProvider.createToken(user.getUsername(), user.getId());
+        String token = jwtTokenProvider.createToken(user.getUsername(), user.getId());
+        return UserMapper.mapToUserLoginResponse(user, token);
     }
 
     public UserDetailResponse getUserDetail(UUID id) {

@@ -12,7 +12,7 @@ import com.sportify.reservationservice.models.response.BasketListResponse;
 import com.sportify.reservationservice.repositories.BasketItemRepository;
 import com.sportify.reservationservice.repositories.BasketRepository;
 import com.sportify.reservationservice.repositories.ScheduleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,17 +20,15 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
+@RequiredArgsConstructor
 @Service
 public class BasketService {
 
-    @Autowired
-    private BasketRepository basketRepository;
+    private final BasketRepository basketRepository;
 
-    @Autowired
-    private BasketItemRepository basketItemRepository;
+    private final BasketItemRepository basketItemRepository;
 
-    @Autowired
-    private ScheduleRepository scheduleRepository;
+    private final ScheduleRepository scheduleRepository;
 
     public BasketListResponse getBasketByUserId(UUID userId) {
         Basket basket = basketRepository.findByUserId(userId);
@@ -54,8 +52,6 @@ public class BasketService {
         if (schedule == null || schedule.getStatus() != ScheduleStatus.AVAILABLE) {
             throw new ScheduleNotAvailableException();
         }
-
-      //  schedule.validateScheduleAvailability();
 
         BasketItem basketItem = new BasketItem();
         basketItem.setSchedule(schedule);

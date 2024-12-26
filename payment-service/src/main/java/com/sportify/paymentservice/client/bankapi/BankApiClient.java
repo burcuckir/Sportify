@@ -1,8 +1,8 @@
 package com.sportify.paymentservice.client.bankapi;
 
-import com.sportify.paymentservice.client.BaseApiClient;
 import com.sportify.paymentservice.client.bankapi.models.BankPayRequest;
 import com.sportify.paymentservice.client.bankapi.models.BankPayResponse;
+import org.sportify.clientprovider.BaseApiClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
