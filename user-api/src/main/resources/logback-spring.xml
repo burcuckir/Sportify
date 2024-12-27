@@ -3,6 +3,7 @@
         <destination>logstash:5001</destination>
         <encoder class="net.logstash.logback.encoder.LogstashEncoder">
             <includeContext>true</includeContext>
+            <customFields>{"applicationName":"user-api"}</customFields>
         </encoder>
     </appender>
 
