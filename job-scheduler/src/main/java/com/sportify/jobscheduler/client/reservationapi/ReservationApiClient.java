@@ -14,7 +14,7 @@ public class ReservationApiClient extends BaseApiClient {
 
     private static final Logger logger = LoggerFactory.getLogger(ReservationApiClient.class);
 
-    public ReservationApiClient(@Value("${reservation.base.url}") String baseUrl) {
+    public ReservationApiClient(@Value("${reservation.api.base.url}") String baseUrl) {
         super(new RestTemplate(), baseUrl);
     }
 

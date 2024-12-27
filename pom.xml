@@ -12,9 +12,9 @@
         <module>infrastructure</module>
         <module>gateway</module>
         <module>job-scheduler</module>
-        <module>payment-service</module>
-        <module>reservation-service</module>
-        <module>user-service</module>
+        <module>payment-api</module>
+        <module>reservation-api</module>
+        <module>user-api</module>
     </modules>
 
     <properties>

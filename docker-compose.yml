@@ -13,37 +13,27 @@ services:
     networks:
       - app-network
 
-  job-scheduler:
-    build:
-      context: .
-      dockerfile: ./job-scheduler/Dockerfile
-    container_name: job-scheduler
-    ports:
-      - "8086:8086"
-    networks:
-      - app-network
-
   user-db:
     image: postgres:15
     container_name: user-db
     environment:
       POSTGRES_USER: sportify
       POSTGRES_PASSWORD: sportify123*
-      POSTGRES_DB: user_service_db
+      POSTGRES_DB: user_db
     ports:
       - "5432:5432"
     networks:
       - app-network
 
-  user-service:
+  user-api:
     build:
       context: .
-      dockerfile: ./user-service/Dockerfile
-    container_name: user-service
+      dockerfile: ./user-api/Dockerfile
+    container_name: user-api
     ports:
       - "8081:8081"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://user-db:5432/user_service_db
+      SPRING_DATASOURCE_URL: jdbc:postgresql://user-db:5432/user_db
       SPRING_DATASOURCE_USERNAME: sportify
       SPRING_DATASOURCE_PASSWORD: sportify123*
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
@@ -58,21 +48,21 @@ services:
     environment:
       POSTGRES_USER: sportify
       POSTGRES_PASSWORD: sportify123*
-      POSTGRES_DB: reservation_service_db
+      POSTGRES_DB: reservation_db
     ports:
       - "5433:5432"
     networks:
       - app-network
 
-  reservation-service:
+  reservation-api:
     build:
       context: .
-      dockerfile: ./reservation-service/Dockerfile
-    container_name: reservation-service
+      dockerfile: ./reservation-api/Dockerfile
+    container_name: reservation-api
     ports:
       - "8082:8082"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://reservation-db:5432/reservation_service_db
+      SPRING_DATASOURCE_URL: jdbc:postgresql://reservation-db:5432/reservation_db
       SPRING_DATASOURCE_USERNAME: sportify
       SPRING_DATASOURCE_PASSWORD: sportify123*
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
@@ -92,21 +82,21 @@ services:
     environment:
       POSTGRES_USER: sportify
       POSTGRES_PASSWORD: sportify123*
-      POSTGRES_DB: payment_service_db
+      POSTGRES_DB: payment_db
     ports:
       - "5434:5432"
     networks:
       - app-network
 
-  payment-service:
+  payment-api:
     build:
       context: .
-      dockerfile: ./payment-service/Dockerfile
-    container_name: payment-service
+      dockerfile: ./payment-api/Dockerfile
+    container_name: payment-api
     ports:
       - "8084:8084"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://payment-db:5432/payment_service_db
+      SPRING_DATASOURCE_URL: jdbc:postgresql://payment-db:5432/payment_db
       SPRING_DATASOURCE_USERNAME: sportify
       SPRING_DATASOURCE_PASSWORD: sportify123*
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
@@ -114,13 +104,13 @@ services:
       SPRING_RABBITMQ_PORT: 5672
       SPRING_RABBITMQ_USERNAME: guest
       SPRING_RABBITMQ_PASSWORD: guest
-      WIREMOCK_BASE_URL: http://wiremock:8080
-      RESERVATION_API_BASE_URL: http://reservation-service:8082
+      MOCK_SERVER_BASE_URL: http://mock-server:8080
+      RESERVATION_API_BASE_URL: http://reservation-api:8082
 
     depends_on:
       - payment-db
       - rabbitmq
-      - wiremock
+      - mock-server
     networks:
       - app-network
 
@@ -136,11 +126,11 @@ services:
     networks:
       - app-network
 
-  wiremock:
+  mock-server:
     build:
       context: .
-      dockerfile: ./wiremock-service/Dockerfile
-    container_name: wiremock
+      dockerfile: ./mock-server/Dockerfile
+    container_name: mock-server
     ports:
       - "8083:8080"
     networks:
@@ -184,6 +174,21 @@ services:
       - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf
     depends_on:
       - elasticsearch
+    networks:
+      - app-network
+
+
+  job-scheduler:
+    build:
+      context: .
+      dockerfile: ./job-scheduler/Dockerfile
+    container_name: job-scheduler
+    environment:
+      RESERVATION_API_BASE_URL: http://reservation-api:8082
+    ports:
+      - "8086:8086"
+    depends_on:
+      - reservation-api
     networks:
       - app-network
 
