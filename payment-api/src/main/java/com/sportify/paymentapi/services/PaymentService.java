@@ -11,10 +11,12 @@ import com.sportify.paymentapi.entities.Transaction;
 import com.sportify.paymentapi.enums.PaymentStatus;
 import com.sportify.paymentapi.exceptions.AmountIsNotValidException;
 import com.sportify.paymentapi.exceptions.BasketNotFoundException;
+import com.sportify.paymentapi.exceptions.TransactionNotFoundException;
 import com.sportify.paymentapi.mappers.PaymentMapper;
 import com.sportify.paymentapi.models.requests.PayRequest;
 import com.sportify.paymentapi.models.response.PayResponse;
-import com.sportify.paymentapi.queuemessages.OrderCreatedMessage;
+import com.sportify.paymentapi.queuemessages.OrderFailedMessage;
+import com.sportify.paymentapi.queuemessages.PaymentCompletedMessage;
 import com.sportify.paymentapi.repositories.TransactionRepository;
 import lombok.RequiredArgsConstructor;
 import org.sportify.messageservice.RabbitMQMessageService;
@@ -58,13 +60,23 @@ public class PaymentService {
         transactionRepository.save(transaction);
 
         if (payBankResponse.getIsSuccess()) {
-            var orderCreatedMessage = new OrderCreatedMessage();
-            orderCreatedMessage.setOrderId(orderId);
-            orderCreatedMessage.setUserId(basket.getUserId());
-            orderCreatedMessage.setAmount(request.getAmount());
-            messageService.sendMessage(RabbitMQConfig.ORDER_QUEUE, orderCreatedMessage);
+            var paymentCompletedMessage = new PaymentCompletedMessage();
+            paymentCompletedMessage.setOrderId(orderId);
+            paymentCompletedMessage.setUserId(basket.getUserId());
+            paymentCompletedMessage.setAmount(request.getAmount());
+            messageService.sendMessage(RabbitMQConfig.PAYMENT_QUEUE, paymentCompletedMessage);
         }
 
         return PaymentMapper.mapToPayResponse(payBankResponse);
+    }
+
+    public void refund(OrderFailedMessage orderFailedMessage){
+        Transaction transaction = transactionRepository.findByOrderId(orderFailedMessage.getOrderId());
+        if(transaction==null)
+            throw new TransactionNotFoundException();
+
+        transaction.setStatus(PaymentStatus.CANCELLED);
+        transaction.setErrorMessage(orderFailedMessage.getReason());
+        transactionRepository.save(transaction);
     }
 }

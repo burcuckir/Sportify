@@ -26,12 +26,16 @@ public class Transaction extends BaseEntity {
     @Column(nullable = false)
     private PaymentStatus status;
 
+    @Column
+    private String errorMessage;
+
     public static Transaction create(UUID userId, UUID orderId, Double amount, PaymentStatus paymentStatus){
         Transaction transaction = new Transaction();
         transaction.setAmount(amount);
         transaction.setStatus(paymentStatus);
         transaction.setOrderId(orderId);
         transaction.setUserId(userId);
+        transaction.setErrorMessage("");
         return transaction;
     }
 }

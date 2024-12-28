@@ -7,13 +7,21 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfig {
 
-    public static final String ORDER_QUEUE = "order-queue";
+    public static final String PAYMENT_QUEUE = "payment-queue";
+    public static final String ORDER_FAILED_QUEUE = "order-failed-queue";
     public static final String ERROR_QUEUE = "error-queue";
     public static final String DLX_EXCHANGE = "dlx-exchange";
 
     @Bean
-    public Queue orderQueue() {
-        return QueueBuilder.durable(ORDER_QUEUE)
+    public Queue paymentQueue() {
+        return QueueBuilder.durable(PAYMENT_QUEUE)
+                .withArgument("x-dead-letter-exchange", DLX_EXCHANGE)
+                .build();
+    }
+
+    @Bean
+    public Queue orderFailedQueue() {
+        return QueueBuilder.durable(ORDER_FAILED_QUEUE)
                 .withArgument("x-dead-letter-exchange", DLX_EXCHANGE)
                 .build();
     }
