@@ -1,7 +1,7 @@
 package com.sportify.reservationapi.listeners;
 
 import com.sportify.reservationapi.configuration.RabbitMQConfig;
-import com.sportify.reservationapi.queuemessages.OrderCreatedMessage;
+import com.sportify.reservationapi.queuemessages.PaymentCompletedMessage;
 import com.sportify.reservationapi.services.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.sportify.jsonconverter.JsonConverter;
@@ -14,14 +14,12 @@ public class RabbitMQListener {
 
     private final OrderService orderService;
 
-    @RabbitListener(queues = RabbitMQConfig.ORDER_QUEUE)
+    @RabbitListener(queues = RabbitMQConfig.PAYMENT_QUEUE)
     public void receiveMessage(String message) {
+        PaymentCompletedMessage paymentCompletedMessage = JsonConverter.convertFromJson(message, PaymentCompletedMessage.class);
 
-        OrderCreatedMessage orderCreatedMessage = JsonConverter.convertFromJson(message, OrderCreatedMessage.class);
-
-        if (orderCreatedMessage != null)
-            orderService.completeOrder(orderCreatedMessage.getOrderId(), orderCreatedMessage.getUserId(),
-                    orderCreatedMessage.getAmount());
-
+        if (paymentCompletedMessage != null)
+            orderService.completeOrder( paymentCompletedMessage.getOrderId(),
+                    paymentCompletedMessage.getUserId(), paymentCompletedMessage.getAmount());
     }
 }

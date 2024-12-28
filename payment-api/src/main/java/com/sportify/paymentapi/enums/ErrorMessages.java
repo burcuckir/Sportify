@@ -8,7 +8,8 @@ import lombok.Getter;
 public enum ErrorMessages  {
 
     AMOUNT_NOT_VALID("Amount is not valid","ERR100"),
-    BASKET_NOT_FOUND("Basket not found","ERR200");
+    BASKET_NOT_FOUND("Basket not found","ERR200"),
+    TRANSACTION_NOT_FOUND("Transaction not found","ERR300");
 
 
     private final String MESSAGE;
