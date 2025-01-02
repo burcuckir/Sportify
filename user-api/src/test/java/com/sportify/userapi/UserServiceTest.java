@@ -9,7 +9,7 @@ import com.sportify.userapi.models.response.UpdatedPasswordResponse;
 import com.sportify.userapi.models.response.UserDetailResponse;
 import com.sportify.userapi.models.response.UserLoginResponse;
 import com.sportify.userapi.repositories.UserRepository;
-import com.sportify.userapi.services.UserService;
+import com.sportify.userapi.services.UserServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -35,7 +35,7 @@ class UserServiceTest {
     private JwtTokenProvider jwtTokenProvider;
 
     @InjectMocks
-    private UserService userService;
+    private UserServiceImpl userServiceImpl;
 
     @Test
     void register_shouldThrowException_whenUsernameExists() {
@@ -44,7 +44,7 @@ class UserServiceTest {
 
         when(userRepository.findByUsername("mockUser")).thenReturn(new User());
 
-        assertThrows(UserAlreadyExistException.class, () -> userService.register(registerRequest));
+        assertThrows(UserAlreadyExistException.class, () -> userServiceImpl.register(registerRequest));
     }
 
     @Test
@@ -63,7 +63,7 @@ class UserServiceTest {
         User user = new User();
         when(userRepository.save(any(User.class))).thenReturn(user);
 
-        UserDetailResponse response = userService.register(registerRequest);
+        UserDetailResponse response = userServiceImpl.register(registerRequest);
 
         assertNotNull(response);
         verify(userRepository).save(any(User.class));
@@ -76,7 +76,7 @@ class UserServiceTest {
 
         when(userRepository.findByUsername("nonExistentUser")).thenReturn(null);
 
-        assertThrows(UserNotFoundException.class, () -> userService.login(request));
+        assertThrows(UserNotFoundException.class, () -> userServiceImpl.login(request));
     }
 
     @Test
@@ -91,7 +91,7 @@ class UserServiceTest {
 
         when(userRepository.findByUsername("user")).thenReturn(user);
 
-        assertThrows(InvalidPasswordException.class, () -> userService.login(request));
+        assertThrows(InvalidPasswordException.class, () -> userServiceImpl.login(request));
     }
 
     @Test
@@ -108,7 +108,7 @@ class UserServiceTest {
         when(userRepository.findByUsername("user")).thenReturn(user);
         when(jwtTokenProvider.createToken("user", user.getId())).thenReturn("jwtToken");
 
-        UserLoginResponse response = userService.login(request);
+        UserLoginResponse response = userServiceImpl.login(request);
 
         assertNotNull(response);
         assertEquals("jwtToken", response.getToken());
@@ -122,7 +122,7 @@ class UserServiceTest {
 
         when(userRepository.findByUsername("nonExistentUser")).thenReturn(null);
 
-        assertThrows(UserNotFoundException.class, () -> userService.updatePassword(jwtModel, request));
+        assertThrows(UserNotFoundException.class, () -> userServiceImpl.updatePassword(jwtModel, request));
     }
 
     @Test
@@ -138,7 +138,7 @@ class UserServiceTest {
 
         when(userRepository.findByUsername("user")).thenReturn(user);
 
-        assertThrows(SamePasswordErrorException.class, () -> userService.updatePassword(jwtModel, request));
+        assertThrows(SamePasswordErrorException.class, () -> userServiceImpl.updatePassword(jwtModel, request));
     }
 
     @Test
@@ -154,7 +154,7 @@ class UserServiceTest {
 
         when(userRepository.findByUsername("user")).thenReturn(user);
 
-        UpdatedPasswordResponse response = userService.updatePassword(jwtModel, request);
+        UpdatedPasswordResponse response = userServiceImpl.updatePassword(jwtModel, request);
 
         assertNotNull(response);
         verify(userRepository).updatePasswordByUsername("user", PasswordSecurityUtil.hashPassword("newPassword"));
