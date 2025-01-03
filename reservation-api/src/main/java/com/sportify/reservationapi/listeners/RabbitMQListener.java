@@ -2,7 +2,7 @@ package com.sportify.reservationapi.listeners;
 
 import com.sportify.reservationapi.configuration.RabbitMQConfig;
 import com.sportify.reservationapi.queuemessages.PaymentCompletedMessage;
-import com.sportify.reservationapi.services.OrderService;
+import com.sportify.reservationapi.services.order.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.sportify.jsonconverter.JsonConverter;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;

@@ -1,7 +1,7 @@
 package com.sportify.reservationapi.controllers;
 
 import com.sportify.reservationapi.models.response.BranchListResponse;
-import com.sportify.reservationapi.services.BranchService;
+import com.sportify.reservationapi.services.branch.BranchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

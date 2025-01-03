@@ -1,4 +1,4 @@
-package com.sportify.reservationapi.services;
+package com.sportify.reservationapi.services.basket;
 
 import com.sportify.reservationapi.models.response.BasketListResponse;
 

@@ -1,9 +1,10 @@
-package com.sportify.reservationapi.services;
+package com.sportify.reservationapi.services.facility;
 
 import com.sportify.reservationapi.entities.Facility;
 import com.sportify.reservationapi.mappers.FacilityMapper;
 import com.sportify.reservationapi.models.response.FacilityListResponse;
 import com.sportify.reservationapi.repositories.FacilityRepository;
+import com.sportify.reservationapi.services.facility.FacilityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +13,7 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
-public class FacilityServiceImpl implements FacilityService{
+public class FacilityServiceImpl implements FacilityService {
 
     private final FacilityRepository facilityRepository;
 

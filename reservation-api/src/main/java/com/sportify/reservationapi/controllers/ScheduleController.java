@@ -2,7 +2,7 @@ package com.sportify.reservationapi.controllers;
 
 import com.sportify.reservationapi.models.request.AddScheduleRequest;
 import com.sportify.reservationapi.models.response.ScheduleListResponse;
-import com.sportify.reservationapi.services.ScheduleService;
+import com.sportify.reservationapi.services.schedule.ScheduleService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

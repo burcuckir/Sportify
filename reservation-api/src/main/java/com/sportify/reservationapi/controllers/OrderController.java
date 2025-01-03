@@ -1,7 +1,7 @@
 package com.sportify.reservationapi.controllers;
 
 import com.sportify.reservationapi.models.response.OrderListResponse;
-import com.sportify.reservationapi.services.OrderService;
+import com.sportify.reservationapi.services.order.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package com.sportify.reservationapi.services;
+package com.sportify.reservationapi.services.schedule;
 
 import com.sportify.reservationapi.models.request.AddScheduleRequest;
 import com.sportify.reservationapi.models.response.ScheduleListResponse;

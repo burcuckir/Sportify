@@ -1,4 +1,4 @@
-package com.sportify.reservationapi.services;
+package com.sportify.reservationapi.services.schedule;
 
 import com.sportify.reservationapi.entities.Branch;
 import com.sportify.reservationapi.entities.Facility;
@@ -8,6 +8,7 @@ import com.sportify.reservationapi.models.request.AddScheduleRequest;
 import com.sportify.reservationapi.models.response.ScheduleListResponse;
 import com.sportify.reservationapi.repositories.BranchRepository;
 import com.sportify.reservationapi.repositories.ScheduleRepository;
+import com.sportify.reservationapi.services.schedule.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
-public class ScheduleServiceImpl implements ScheduleService{
+public class ScheduleServiceImpl implements ScheduleService {
 
     @Value("${schedule.max.date}")
     private String maxDate;

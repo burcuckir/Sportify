@@ -1,4 +1,4 @@
-package com.sportify.reservationapi.services;
+package com.sportify.reservationapi.services.order;
 
 import com.sportify.reservationapi.configuration.RabbitMQConfig;
 import com.sportify.reservationapi.entities.Basket;
@@ -15,6 +15,7 @@ import com.sportify.reservationapi.queuemessages.OrderFailedMessage;
 import com.sportify.reservationapi.repositories.BasketRepository;
 import com.sportify.reservationapi.repositories.OrderRepository;
 import com.sportify.reservationapi.repositories.ScheduleRepository;
+import com.sportify.reservationapi.services.order.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.sportify.messageservice.RabbitMQMessageService;
 import org.springframework.stereotype.Service;
@@ -27,7 +28,7 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
-public class OrderServiceImpl implements OrderService{
+public class OrderServiceImpl implements OrderService {
 
 
     private final OrderRepository orderRepository;

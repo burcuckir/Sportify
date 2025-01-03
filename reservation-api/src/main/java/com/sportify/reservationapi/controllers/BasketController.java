@@ -2,7 +2,7 @@ package com.sportify.reservationapi.controllers;
 
 import com.sportify.reservationapi.models.request.AddToBasketRequest;
 import com.sportify.reservationapi.models.response.BasketListResponse;
-import com.sportify.reservationapi.services.BasketService;
+import com.sportify.reservationapi.services.basket.BasketService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

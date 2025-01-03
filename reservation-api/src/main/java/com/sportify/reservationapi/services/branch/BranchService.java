@@ -1,4 +1,4 @@
-package com.sportify.reservationapi.services;
+package com.sportify.reservationapi.services.branch;
 
 import com.sportify.reservationapi.models.response.BranchListResponse;
 

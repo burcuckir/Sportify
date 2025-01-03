@@ -1,4 +1,4 @@
-package com.sportify.reservationapi.services;
+package com.sportify.reservationapi.services.basket;
 
 import com.sportify.reservationapi.entities.Basket;
 import com.sportify.reservationapi.entities.BasketItem;
@@ -12,6 +12,7 @@ import com.sportify.reservationapi.models.response.BasketListResponse;
 import com.sportify.reservationapi.repositories.BasketItemRepository;
 import com.sportify.reservationapi.repositories.BasketRepository;
 import com.sportify.reservationapi.repositories.ScheduleRepository;
+import com.sportify.reservationapi.services.basket.BasketService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +23,7 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
-public class BasketServiceImpl implements BasketService{
+public class BasketServiceImpl implements BasketService {
 
     private final BasketRepository basketRepository;
 

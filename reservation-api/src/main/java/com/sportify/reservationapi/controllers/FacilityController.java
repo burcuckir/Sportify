@@ -1,7 +1,7 @@
 package com.sportify.reservationapi.controllers;
 
 import com.sportify.reservationapi.models.response.FacilityListResponse;
-import com.sportify.reservationapi.services.FacilityService;
+import com.sportify.reservationapi.services.facility.FacilityService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

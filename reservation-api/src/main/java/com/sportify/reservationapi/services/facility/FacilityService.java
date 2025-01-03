@@ -1,4 +1,4 @@
-package com.sportify.reservationapi.services;
+package com.sportify.reservationapi.services.facility;
 
 import com.sportify.reservationapi.models.response.FacilityListResponse;
 

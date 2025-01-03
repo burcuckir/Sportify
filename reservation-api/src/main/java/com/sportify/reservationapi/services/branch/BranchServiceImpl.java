@@ -1,9 +1,10 @@
-package com.sportify.reservationapi.services;
+package com.sportify.reservationapi.services.branch;
 
 import com.sportify.reservationapi.entities.Branch;
 import com.sportify.reservationapi.mappers.BranchMapper;
 import com.sportify.reservationapi.models.response.BranchListResponse;
 import com.sportify.reservationapi.repositories.BranchRepository;
+import com.sportify.reservationapi.services.branch.BranchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
