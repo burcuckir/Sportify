@@ -30,7 +30,6 @@ import java.util.UUID;
 @Service
 public class PaymentServiceImpl implements PaymentService{
 
-
     private final BankApiClient bankApiClient;
 
     private final ReservationApiClient reservationApiClient;
